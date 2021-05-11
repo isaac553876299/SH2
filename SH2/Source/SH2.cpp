@@ -54,16 +54,15 @@ public:
 	}
 	void Update(float dt, int* mouse, int* keyboard)
 	{
-		system("cls");
-		printf("p_a %.2f\nh_a %.2f\na_s %.2f\nr_s %.2f\n", player_angle, hexagon_angle, angle_speed, radius_speed);
+		//system("cls");
 		unsigned int count = 0;
 		for (unsigned int i = 1; i < MAX; ++i)
 		{
 			if (hexagons[i]) ++count;
 		}
-		printf("count %d\n", count);
+		printf("p_a %.1f | h_a %.2f | a_s %.2f | r_s %.2f | dt %.3f | count %d\n", player_angle, hexagon_angle, angle_speed, radius_speed, dt, count);
 
-		if (keyboard[SDL_SCANCODE_SPACE] == 1)
+		if (keyboard[SDL_SCANCODE_SPACE] == 2)
 		{
 			for (unsigned int i = 1; i < MAX; ++i)
 				if (!hexagons[i])
@@ -73,8 +72,8 @@ public:
 				}
 		}
 
-		if (mouse[1 + SDL_BUTTON_LEFT]) player_angle -= 3.0f;
-		if (mouse[1 + SDL_BUTTON_RIGHT]) player_angle += 3.0f;
+		if (mouse[1 + SDL_BUTTON_LEFT]) player_angle -= 300.0f * dt;
+		if (mouse[1 + SDL_BUTTON_RIGHT]) player_angle += 300.0f * dt;
 
 		for (unsigned int i = 1; i < MAX; i++)
 		{
@@ -92,7 +91,7 @@ public:
 			}
 		}
 
-		hexagon_angle += angle_speed;
+		hexagon_angle += angle_speed * dt;
 		if (hexagon_angle >= 360.0f || hexagon_angle <= -360.0f) hexagon_angle = 0.0f;
 		if (player_angle >= 360.0f || player_angle <= -360.0f) player_angle = 0.0f;
 	}
